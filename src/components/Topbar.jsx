@@ -1,12 +1,14 @@
 import react from "react";
 import { useLocation} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const pageNames = {
     "/": "Home",
     "/portfolio": "Portfolio",
     "/market": "Market",
     "/models": "Models",
-    "/reports": "Reports"
+    "/reports": "Reports",
+    "/account" : "Account",
 };
 
 export default function TopBar() {
@@ -17,9 +19,12 @@ export default function TopBar() {
         <div className="topbar">
             <span className="app-name">ED&P</span>
             <span className="app-name">{pageName}</span>
-            <Link to={"/account"}>
+            
+            <Link to="/account">
                 <p>Account</p>
             </Link>
+            
+            
         </div>
     )
 }

@@ -39,7 +39,7 @@
 
 .nav-menu {
   background-color: #ffffff;
-  width: 250px;
+  width: 150px;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -48,7 +48,17 @@
   left: -100%;
   transition: 850ms;
 }
-
+.nav-menu-inactive {
+  background-color: #ffffff;
+  width: 100px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: 850ms;
+}
 .nav-menu.active {
   left: 0;
   transition: 450ms;
@@ -82,6 +92,7 @@
 
 .nav-menu-items {
   width: 100%;
+  
 }
 
 .navbar-toggle {
@@ -96,3 +107,4 @@
 span {
   margin-left: 16px;
 }
+

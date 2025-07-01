@@ -20,3 +20,7 @@
       </p>
 
         const [count, setCount] = useState(0)
+
+
+- make topbar more structully sound
+- make sidebar more fixed

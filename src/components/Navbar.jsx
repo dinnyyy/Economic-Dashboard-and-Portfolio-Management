@@ -15,11 +15,25 @@ export default function MySidebar() {
 
     <>
         <IconContext.Provider value={{color: "undefined"}}>
-            <div className="navbar">
-                <Link to="#" className="menu-bars">
-                    <FaIcons.FaBars onClick={showSidebar} />
-                </Link>
-            </div>
+
+            <nav className="nav-menu-inactive">
+                <ul className="nav-menu-items">
+                    <li className="navbar-toggle">
+                        <Link to="#" className="menu-bars" onClick={showSidebar}>
+                            <FaIcons.FaBars />
+                        </Link>
+                    </li>
+                    {SidebarData.map((item, index) => {
+                        return ( 
+                            <li key={index} className={item.cName}>
+                                <Link to={item.path}>
+                                    {item.icon}
+                                </Link>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </nav>
             <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
                 <ul className="nav-menu-items" onClick={showSidebar}>
                     <li className="navbar-toggle">
@@ -32,6 +46,7 @@ export default function MySidebar() {
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
                                     {item.icon}
+                                    {item.title}
                                 </Link>
                             </li>
                         )

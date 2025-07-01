@@ -16,9 +16,11 @@ import Market from "./routes/Market";
 import Models from "./routes/Models";
 import "./App.css";
 import Account from "./routes/account";
+import TopBar from "./components/Topbar";
 
 const AppLayout = () => (
   <>
+    <TopBar />
     <Navbar />
     <Outlet />
   </>
