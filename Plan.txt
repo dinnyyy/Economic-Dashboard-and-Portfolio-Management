@@ -1,0 +1,111 @@
+quant-app/
+│
+├── backend/
+│   ├── app/
+│   │   ├── main.py             # FastAPI entry point
+│   │   ├── models.py           # SQLAlchemy models (Users, Portfolios, Trades, etc.)
+│   │   ├── schemas.py          # Pydantic schemas for API
+│   │   ├── database.py         # DB connection & session
+│   │   ├── crud/               # CRUD operations
+│   │   │   ├── user.py
+│   │   │   ├── portfolio.py
+│   │   │   ├── trade.py
+│   │   │   ├── market.py
+│   │   │   ├── report.py
+│   │   │   └── model.py
+│   │   ├── routes/
+│   │   │   ├── auth.py         # Account (register/login)
+│   │   │   ├── home.py
+│   │   │   ├── portfolios.py
+│   │   │   ├── trades.py
+│   │   │   ├── market.py
+│   │   │   ├── models.py       # Econometric model endpoints
+│   │   │   ├── reports.py
+│   │   │   └── users.py
+│   │   ├── services/           # Business logic if needed
+│   │   │   ├── data_fetcher.py
+│   │   │   ├── garch_model.py
+│   │   │   ├── arima_model.py
+│   │   │   ├── risk_metrics.py
+│   │   │   └── report_generator.py
+│   │   ├── utils/              # Common helpers
+│   │   │   ├── auth.py
+│   │   │   ├── scheduler.py
+│   │   │   └── config.py
+│   │   └── tests/
+│   │       ├── test_auth.py
+│   │       ├── test_portfolios.py
+│   │       └── ...
+│   ├── scripts/
+│   │   ├── fetch_market_data.py
+│   │   ├── run_garch_r.py      # Calls R GARCH if needed
+│   │   └── run_arima_r.py
+│   ├── requirements.txt
+│   └── alembic/                # DB migrations if using Alembic
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.js
+│   │   │   ├── Sidebar.js
+│   │   │   ├── Chart.js
+│   │   │   ├── Table.js
+│   │   │   ├── TradeForm.js
+│   │   │   ├── ModelRunner.js
+│   │   │   ├── ReportViewer.js
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Account.jsx
+│   │   │   ├── Portfolio.jsx
+│   │   │   ├── Market.jsx
+│   │   │   ├── Models.jsx
+│   │   │   ├── Reports.jsx
+│   │   ├── api/                # Axios calls to backend
+│   │   │   ├── auth.js
+│   │   │   ├── portfolio.js
+│   │   │   ├── market.js
+│   │   │   ├── models.js
+│   │   │   ├── reports.js
+│   │   ├── App.jsx
+│   │   ├── index.js
+│   ├── package.json
+│
+├── r_models/
+│   ├── garch_model.R
+│   ├── arima_model.R
+│   ├── generate_report.Rmd
+│
+├── .env                        # Secrets for DB connection, API keys
+├── docker-compose.yml          # Optional: to run everything together
+├── README.md
+└── requirements.txt
+
+
+
+Project: Quant Dev App
+
+Pages:
+- Account (register, login)
+- Home (dashboard)
+- Portfolio (manage portfolios/trades)
+- Market (stock/econ data)
+- Models (run forecasts, GARCH)
+- Reports (generate + view reports)
+
+Main folders:
+- backend/
+  - app/ (FastAPI core: main.py, routes, models, services, utils)
+  - scripts/ (data fetchers, R model runners)
+  - requirements.txt
+- frontend/
+  - src/pages/ (Home, Account, Portfolio, Market, Models, Reports)
+  - src/components/ (charts, tables, forms)
+  - src/api/ (Axios calls to backend)
+- r_models/
+  - garch_model.R
+  - arima_model.R
+  - generate_report.Rmd
+- .env (secrets)
+- docker-compose.yml (optional)
+- README.md

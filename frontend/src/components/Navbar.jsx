@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import "../App.css";
 import { IconContext } from "react-icons";
+import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+
 
 
 export default function MySidebar() {
@@ -20,7 +22,7 @@ export default function MySidebar() {
                 <ul className="nav-menu-items">
                     <li className="navbar-toggle">
                         <Link to="#" className="menu-bars" onClick={showSidebar}>
-                            <FaIcons.FaBars />
+                            <MdOutlineKeyboardDoubleArrowRight />
                         </Link>
                     </li>
                     {SidebarData.map((item, index) => {
@@ -38,7 +40,7 @@ export default function MySidebar() {
                 <ul className="nav-menu-items" onClick={showSidebar}>
                     <li className="navbar-toggle">
                         <Link to="#" className="menu-bars">
-                            <AiIcons.AiOutlineClose />
+                            <MdOutlineKeyboardDoubleArrowLeft />
                         </Link>
                     </li>
                     {SidebarData.map((item, index) => {
