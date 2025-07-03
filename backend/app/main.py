@@ -1,5 +1,10 @@
-from database import engine
-import models
+from .database import engine
+from . import models
+from fastapi import FastAPI
+from . import routes
 
-if __name__ == "__main__":
-    models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
+app.include_router(routes.router)
