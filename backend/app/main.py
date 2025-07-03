@@ -1,3 +1,5 @@
-from . import models
+from database import engine
+import models
 
-models.Base.metadata.create_all(bind=engine)
+if __name__ == "__main__":
+    models.Base.metadata.create_all(bind=engine)

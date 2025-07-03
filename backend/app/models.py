@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Date, JSON, Table
-from .database import Base
+from database import Base
 from sqlalchemy.orm import relationship
 
 report_models = Table(

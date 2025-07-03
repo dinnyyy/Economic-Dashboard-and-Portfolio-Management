@@ -1,6 +1,8 @@
 import react from "react";
 import { useLocation} from "react-router-dom";
 import { Link } from "react-router-dom";
+import {CgProfile} from "react-icons/cg"
+import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const pageNames = {
     "/": "Home",
@@ -21,7 +23,7 @@ export default function TopBar() {
             <span className="app-name">{pageName}</span>
             
             <Link to="/account">
-                <p>Account</p>
+                <CgProfile/>
             </Link>
             
             
