@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
@@ -17,16 +17,26 @@ import Models from "./routes/Models";
 import "./App.css";
 import Account from "./routes/account";
 import TopBar from "./components/Topbar";
+import Login from "./components/Login/Login";
+import Register from "./components/Login/Register";
+import { AuthProvider } from "./AuthContext";
+import PrivateRoute from "./PrivateRoute";
 
-const AppLayout = () => (
-  <>
-    <TopBar />
-    <Navbar />
-    <div className="main-content">
-      <Outlet />
-    </div>
-  </>
-);
+const AppLayout = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  return (
+    <>
+      <TopBar />
+      <div className="app-body">
+        <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <div className={`main-content${sidebarOpen ? " sidebar-open" : ""}`}>
+          <Outlet />
+        </div>
+      </div>
+    </>
+  );
+};
 
 // const router = createBrowserRouter(
 //   createRoutesFromElements(
@@ -40,7 +50,11 @@ const AppLayout = () => (
 
 const router = createBrowserRouter([
   {
-    element: <AppLayout />,
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    element: <PrivateRoute><AppLayout /></PrivateRoute>,
     children: [
       {
         path: "/",
@@ -65,11 +79,15 @@ const router = createBrowserRouter([
       {
         path: "account",
         element: <Account />
-      }
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <React.StrictMode>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  </React.StrictMode>
 );

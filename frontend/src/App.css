@@ -124,10 +124,9 @@ span {
 }
 
 .main-content {
-  margin-top: 60px; /* height of topbar */
-  transition: margin-left 0.3s;
+  margin-top: 60px;
   margin-left: 0;
-  padding: 24px;
+  transition: margin-left 0.3s;
 }
 
 .main-content.sidebar-open {
