@@ -32,6 +32,7 @@ class TradesBase(BaseModel):
     price: float
     date: str  # ISO date string
     portfolio_id: int
+    action: str
 
 class TradesCreate(TradesBase):
     pass

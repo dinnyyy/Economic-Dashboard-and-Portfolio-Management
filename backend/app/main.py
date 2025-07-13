@@ -8,7 +8,6 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# Add this after creating the app
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Or specify your frontend URL, e.g., ["http://localhost:5173"]
