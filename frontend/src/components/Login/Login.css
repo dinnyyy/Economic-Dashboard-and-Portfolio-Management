@@ -4,12 +4,12 @@
     box-sizing: border-box;
 }
 
-body {
+.login-background {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: aquamarine;
+    background: black;
 }
 
 .wrapper {

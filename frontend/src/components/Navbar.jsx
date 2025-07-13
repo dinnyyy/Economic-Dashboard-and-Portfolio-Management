@@ -6,8 +6,7 @@ import { SidebarData } from "./SidebarData";
 import "../App.css";
 import { IconContext } from "react-icons";
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
-
-
+import {CgProfile} from "react-icons/cg"
 
 export default function Navbar() {
     const [sidebar, setSidebar] = useState(false);
@@ -16,7 +15,7 @@ export default function Navbar() {
   return (
 
     <>
-        <IconContext.Provider value={{color: "undefined"}}>
+        <IconContext.Provider value={{color: "#2c3e50"}}>
 
             <nav className="nav-menu-inactive">
                 <ul className="nav-menu-items">
@@ -28,13 +27,19 @@ export default function Navbar() {
                     {SidebarData.map((item, index) => {
                         return ( 
                             <li key={index} className={item.cName}>
-                                <Link to={item.path}>
+                                <Link to={item.path} title={item.title}>
                                     {item.icon}
                                 </Link>
                             </li>
                         )
                     })}
+                    <li className="account-btn nav-text">
+                        <Link to="/account" title="Account">
+                            <CgProfile/> 
+                        </Link>
+                    </li>
                 </ul>
+                
             </nav>
             <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
                 <ul className="nav-menu-items" onClick={showSidebar}>
@@ -48,13 +53,24 @@ export default function Navbar() {
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
                                     {item.icon}
-                                    {item.title}
+                                    <span>{item.title}</span>
                                 </Link>
                             </li>
                         )
                     })}
+                    <li className="account-btn nav-text">
+                        <Link to="/account">
+                            <CgProfile/> 
+                            <span>Account</span>
+                        </Link>
+                    </li>
+
+                    
                 </ul>
+                
             </nav>
+
+            
         </IconContext.Provider>
     </>
 

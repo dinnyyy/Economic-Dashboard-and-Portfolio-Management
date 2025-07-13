@@ -27,7 +27,6 @@ const AppLayout = () => {
 
   return (
     <>
-      <TopBar />
       <div className="app-body">
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className={`main-content${sidebarOpen ? " sidebar-open" : ""}`}>
@@ -52,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />
   },
   {
     element: <PrivateRoute><AppLayout /></PrivateRoute>,

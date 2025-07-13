@@ -109,3 +109,37 @@ Main folders:
 - .env (secrets)
 - docker-compose.yml (optional)
 - README.md
+
+
+1. Core Functionality Checklist
+A. Authentication & User Management
+[x] Login/Register UI
+[ ] Connect frontend to backend for real authentication (JWT/session)
+[ ] User profile/account management
+B. Portfolio Management
+[ ] CRUD for portfolios (create, view, update, delete)
+[ ] CRUD for trades within portfolios
+[ ] Display portfolio performance (charts/tables)
+C. Market Data
+[ ] Fetch/display market data (stocks, economic indicators)
+[ ] Time series charts for market data
+[ ] Search/select assets
+D. Models & Forecasts
+[ ] UI to run econometric models (GARCH, ARIMA, etc.)
+[ ] Display model results (charts/tables)
+[ ] Backend integration for model execution
+E. Reports
+[ ] Generate reports (PDF/HTML)
+[ ] View/download reports
+2. Technical/Structural Tasks
+[ ] Set up API endpoints in FastAPI for all needed data (portfolios, trades, market, models, reports)
+[ ] Create Axios API layer in frontend for all backend calls
+[ ] Implement protected routes (only logged-in users can access certain pages)
+[ ] Add error handling and loading states in UI
+[ ] Write backend and frontend tests
+3. Polish & Deployment
+[ ] Responsive/mobile-friendly UI
+[ ] User feedback (toasts, modals, etc.)
+[ ] Dockerize backend and frontend for easy deployment
+[ ] Write documentation (README, API docs)
+[ ] Set up CI/CD (optional)

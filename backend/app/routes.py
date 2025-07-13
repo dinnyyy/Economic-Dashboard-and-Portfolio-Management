@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from . import crud
 from . import schemas
 from . import database
+from . import models
 
 router = APIRouter()
 
@@ -124,3 +125,10 @@ def delete_report(report_id: int, db: Session = Depends(database.get_db)):
     if db_report is None:
         raise HTTPException(status_code=404, detail="Report not found")
     return db_report
+
+@router.post("/login")
+def login(user: schemas.UserLogin, db: Session = Depends(database.get_db)):
+    db_user = db.query(models.User).filter_by(username=user.username).first()
+    if not db_user or db_user.password != user.password:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username or password")
+    return {"message": "Login successful"}
