@@ -10,8 +10,7 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <TopBar />
-      <MySidebar />
+       <MySidebar />
       <main className={`main-content ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <div className="content-wrapper">
           <h1>Welcome to Your Dashboard</h1>

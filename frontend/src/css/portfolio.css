@@ -46,3 +46,31 @@ th {
   background-color: #f2f2f2;
   font-weight: bold;
 }
+
+.add-trade-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 12px 12px;
+}
+
+input {
+  border: none;           /* Remove all borders */
+  border-bottom: 2px solid #2c3e50; /* Add only a bottom border */
+  outline: none;          /* Remove the default outline */
+  background: transparent; /* Optional: makes background clear */
+  padding: 0.5em 0;       /* Optional: adds some vertical space */
+  font-size: 1em;         /* Optional: adjust as needed */
+  transition: border-color 0.2s; /* Optional: smooth color change on focus */
+}
+
+input:focus {
+  border-bottom: 2px solid #6b7f91; /* Change color on focus (optional) */
+  outline: none;
+}
+
+/* This targets the default reactjs-popup modal content */
+.reactjs-popup-content, .popup-content {
+  border-radius: 16px !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12) !important;
+}

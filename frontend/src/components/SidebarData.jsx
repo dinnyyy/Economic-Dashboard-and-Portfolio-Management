@@ -4,12 +4,13 @@ import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import { IoGlobeOutline } from "react-icons/io5";
 import { CiCalculator2 } from "react-icons/ci";
+import { RiDashboardHorizontalFill } from "react-icons/ri";
 
 export const SidebarData = [
   {
     title: "Home",
     path: "/",
-    icon: <FaIcons.FaHome />,
+    icon: <RiDashboardHorizontalFill />,
     cName: "nav-text",
   },
   {

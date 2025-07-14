@@ -182,6 +182,7 @@ span {
   font-weight: 500;
 }
 
+/*
 .topbar {
   position: fixed;
   top: 0;
@@ -197,14 +198,15 @@ span {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid #e1e8ed;
 }
+*/
 
 .main-content {
-  margin-top: 60px;
+  margin-top: 0;
   margin-left: 80px;
   transition: margin-left 0.3s ease;
   width: calc(100% - 80px);
   background: #f5f7fa;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 10px);
   overflow-x: hidden;
 }
 
@@ -216,4 +218,8 @@ span {
 
 .app-body {
   background: #f5f7fa;
+}
+
+.topbar {
+  display: none !important;
 }

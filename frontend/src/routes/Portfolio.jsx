@@ -1,6 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import "../css/portfolio.css"
+import AddTrade from "../components/Portoflio/AddTrade";
 
 function Portfolio() {
   const [trades, setTrades] = useState([])
@@ -35,7 +36,7 @@ function Portfolio() {
 
   return (
     <div className="portfolio">
-      <button onClick={null}>Add trade</button>
+      <AddTrade />
 
       <div className="positions-table">
         <table>
