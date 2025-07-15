@@ -39,6 +39,13 @@ export default function AddTrade () {
             modal
             nested
             onClose={resetForm}
+            contentStyle={{
+                width: '320px',         // or any width you prefer, e.g., '300px'
+                maxWidth: '90vw',       // responsive for small screens
+                borderRadius: '16px',
+                boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+                padding: '20px'         // optional: for more inner space
+            }}
         >
             {
                 close => (
@@ -67,19 +74,26 @@ export default function AddTrade () {
                           value={form.quantity}
                           onChange={e => setForm({ ...form, quantity: e.target.value })}
                         />
-                        <select
-                          name="action"
-                          value={form.action}
-                          onChange={e => setForm({ ...form, action: e.target.value })}
-                        >
-                          <option value="">Select action</option>
-                          <option value="buy">Buy</option>
-                          <option value="sell">Sell</option>
-                        </select>
+                        <div className="action-toggle">
+                          <button
+                            type="button"
+                            className={`buy${form.action === "buy" ? " active" : ""}`}
+                            onClick={() => setForm({ ...form, action: "buy" })}
+                          >
+                            Buy
+                          </button>
+                          <button
+                            type="button"
+                            className={`sell${form.action === "sell" ? " active" : ""}`}
+                            onClick={() => setForm({ ...form, action: "sell" })}
+                          >
+                            Sell
+                          </button>
+                        </div>
                         <div style={{ marginTop: '1em', fontWeight: 'bold' }}>
                           Trade Value: ${tradeValue}
                         </div>
-                        <button disabled={hasInvalidValues()} onClick={() => {
+                        <button className="submit" disabled={hasInvalidValues()} onClick={() => {
                             if (hasInvalidValues()) {
                                 setError("Fill out all fields");
                                 return;

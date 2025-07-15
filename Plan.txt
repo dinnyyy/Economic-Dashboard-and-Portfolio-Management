@@ -114,7 +114,7 @@ Main folders:
 1. Core Functionality Checklist
 A. Authentication & User Management
 [x] Login/Register UI
-[ ] Connect frontend to backend for real authentication (JWT/session)
+[x] Connect frontend to backend for real authentication (JWT/session)
 [ ] User profile/account management
 B. Portfolio Management
 [ ] CRUD for portfolios (create, view, update, delete)

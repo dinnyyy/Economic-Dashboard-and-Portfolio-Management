@@ -19,6 +19,10 @@
   transition: background-color 0.3s;
 }
 
+h3 {
+  text-align: center;
+}
+
 .portfolio button:hover {
   background-color: #54a157;
 }
@@ -73,4 +77,66 @@ input:focus {
 .reactjs-popup-content, .popup-content {
   border-radius: 16px !important;
   box-shadow: 0 4px 24px rgba(0,0,0,0.12) !important;
+}
+
+h1 {
+  padding-bottom: 30px;
+  padding-top: 10px;
+}
+
+.action-toggle {
+  display: flex;
+  margin-top: 10px;
+}
+
+.action-toggle button {
+  flex: 1;
+  padding: 7px 0;
+  border: 1px solid #2c3e50;
+  background: #f8f8f8;
+  color: #2c3e50;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 0;
+}
+
+.action-toggle button:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right: none;
+}
+
+.action-toggle button:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.action-toggle button.active {
+  background: #3b823e;
+  color: white;
+  font-weight: bold;
+}
+
+.action-toggle button.sell.active {
+  background: #c0392b; /* A strong red */
+  color: white;
+  font-weight: bold;
+}
+
+.submit {
+  background:#2c3e50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.submit:enabled {
+  cursor: pointer;
+}
+
+.submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.6; /* Optional: visually indicate disabled state */
 }

@@ -36,7 +36,7 @@ function Portfolio() {
 
   return (
     <div className="portfolio">
-      <AddTrade />
+      <h1>Your portfolio</h1>
 
       <div className="positions-table">
         <table>
@@ -75,6 +75,7 @@ function Portfolio() {
         </table>
       </div>
 
+      <AddTrade />
 
       <div className="trades-table">
         <table>
