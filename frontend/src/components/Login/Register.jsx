@@ -28,6 +28,14 @@ function Register() {
         })
       });
       if (response.ok) {
+        // Fetch user info to get user_id
+        const userInfoRes = await fetch(`http://localhost:8000/users/?username=${data.username}`);
+        let userId = null;
+        if (userInfoRes.ok) {
+          const userInfo = await userInfoRes.json();
+          userId = userInfo.user_id;
+        }
+        login(userId, false); // Not remembering on register
         setMessage("Registration successful! Redirecting to login...");
         setTimeout(() => {
           navigate("/login");

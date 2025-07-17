@@ -1,16 +1,26 @@
 from sqlalchemy.orm import Session
 from . import models
 from . import schemas
+from typing import List
 
 def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(
         username=user.username,
         email=user.email,
-        password=user.password   # you need to add this!
+        password=user.password
     )
     db.add(db_user)
     db.commit()
-    db.refresh(db_user)  # Now db_user has user_id, username, email, password
+    db.refresh(db_user)
+
+    # Create a default portfolio for the new user
+    db_portfolio = models.Portfolio(
+        owner_id=db_user.user_id
+    )
+    db.add(db_portfolio)
+    db.commit()
+    db.refresh(db_portfolio)
+
     return db_user
 
 
@@ -19,6 +29,9 @@ def get_user(db: Session, user_id: int):
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
+
+def get_user_by_username(db: Session, username: str):
+    return db.query(models.User).filter(models.User.username == username).first()
 
 def delete_user(db: Session, user_id: int):
     user = get_user(db, user_id)
@@ -51,7 +64,8 @@ def create_trades(db: Session, trade: schemas.TradesCreate):
         quantity=trade.quantity,
         price=trade.price,
         date=trade.date,
-        portfolio_id=trade.portfolio_id
+        portfolio_id=trade.portfolio_id,
+        action=trade.action or "BUY"  # fallback to BUY if action is None
     )
     db.add(db_trade)
     db.commit()
@@ -163,3 +177,6 @@ def update_report(db: Session, report_id: int, report_update: schemas.ReportsCre
         db.commit()
         db.refresh(report)
     return report
+
+def get_all_trades(db: Session):
+    return db.query(models.Trades).all()

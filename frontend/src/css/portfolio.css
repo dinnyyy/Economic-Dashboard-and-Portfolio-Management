@@ -23,6 +23,10 @@ h3 {
   text-align: center;
 }
 
+h2 {
+  text-align: left;
+}
+
 .portfolio button:hover {
   background-color: #54a157;
 }

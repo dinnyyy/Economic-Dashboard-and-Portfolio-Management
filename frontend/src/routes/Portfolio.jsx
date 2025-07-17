@@ -1,12 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import "../css/portfolio.css"
 import AddTrade from "../components/Portoflio/AddTrade";
+import { useAuth } from "../AuthContext"; // if you store user info here
 
 function Portfolio() {
-  const [trades, setTrades] = useState([])
+  const [trades, setTrades] = useState([]);
+  const [portfolioId, setPortfolioId] = useState(null);
+  const { userId } = useAuth(); // You may need to add this to your AuthContext
+
+  useEffect(() => {
+    console.log("userId:", userId);
+    fetch(`http://localhost:8000/users/${userId}/portfolios/`)
+      .then(res => res.json())
+      .then(data => {
+        console.log("Portfolios:", data);
+        if (Array.isArray(data) && data.length > 0) {
+          setPortfolioId(data[0].portfolio_id); // Use the first portfolio for now
+        }
+      });
+  }, [userId]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/trades/")
+      .then(res => res.json())
+      .then(data => {
+        const sorted = Array.isArray(data)
+          ? [...data].sort((a, b) => new Date(b.date) - new Date(a.date))
+          : [];
+        setTrades(sorted);
+      })
+      .catch(err => console.error("Failed to fetch trades", err));
+  }, []);
 
   const calculatePositions = (trades) => {
+    if (!Array.isArray(trades)) return [];
     return Object.values(trades.reduce((acc, trade) => {
       const symbol = trade.symbol;
       
@@ -36,8 +64,10 @@ function Portfolio() {
 
   return (
     <div className="portfolio">
-      <h1>Your portfolio</h1>
-
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: '1200px' }}>
+        <h1 style={{ textAlign: 'left', margin: 0 }}>Your portfolio</h1>
+      </div>
+      <h2 style={{ textAlign: 'left', width: '100%', maxWidth: '1200px', margin: 0 }}>Positions</h2>
       <div className="positions-table">
         <table>
           <thead>
@@ -74,8 +104,23 @@ function Portfolio() {
           </tbody>
         </table>
       </div>
-
-      <AddTrade />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: '1200px', marginTop: '30px' }}>
+        <h2 style={{ textAlign: 'left', margin: 0 }}>Trades</h2>
+        <AddTrade
+          portfolioId={portfolioId}
+          onTradeAdded={() => {
+            fetch("http://localhost:8000/trades/")
+              .then(res => res.json())
+              .then(data => {
+                const sorted = Array.isArray(data)
+                  ? [...data].sort((a, b) => new Date(b.date) - new Date(a.date))
+                  : [];
+                setTrades(sorted);
+              })
+              .catch(err => console.error("Failed to fetch trades", err));
+          }}
+        />
+      </div>
 
       <div className="trades-table">
         <table>

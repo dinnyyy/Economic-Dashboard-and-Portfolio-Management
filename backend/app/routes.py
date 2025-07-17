@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
+from typing import List
 
 from . import crud
 from . import schemas
@@ -21,6 +22,17 @@ def read_user(user_id: int, db: Session = Depends(database.get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+@router.get("/users/", response_model=schemas.UserOut)
+def get_user_by_username(username: str = Query(...), db: Session = Depends(database.get_db)):
+    db_user = crud.get_user_by_username(db, username)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
+
+@router.get("/users/{user_id}/portfolios/", response_model=List[schemas.PortfolioOut])
+def get_user_portfolios(user_id: int, db: Session = Depends(database.get_db)):
+    return db.query(models.Portfolio).filter(models.Portfolio.owner_id == user_id).all()
 
 # Portfolio endpoints
 @router.post("/portfolios/", response_model=schemas.PortfolioOut)
@@ -51,7 +63,11 @@ def delete_portfolio(portfolio_id: int, db: Session = Depends(database.get_db)):
 # Trades endpoints
 @router.post("/trades/", response_model=schemas.TradesOut)
 def create_trades(trade: schemas.TradesCreate, db: Session = Depends(database.get_db)):
-    return crud.create_trades(db=db, trade=trade)
+    trade_obj = crud.create_trades(db=db, trade=trade)
+    # Convert date to string for response
+    if hasattr(trade_obj, 'date') and not isinstance(trade_obj.date, str):
+        trade_obj.date = trade_obj.date.isoformat()
+    return trade_obj
 
 @router.get("/trades/{trades_id}", response_model=schemas.TradesOut)
 def read_trades(trades_id: int, db: Session = Depends(database.get_db)):
@@ -73,6 +89,14 @@ def delete_trades(trades_id: int, db: Session = Depends(database.get_db)):
     if db_trade is None:
         raise HTTPException(status_code=404, detail="Trade not found")
     return db_trade
+
+@router.get("/trades/", response_model=List[schemas.TradesOut])
+def get_all_trades(db: Session = Depends(database.get_db)):
+    trades = crud.get_all_trades(db)
+    for t in trades:
+        if hasattr(t, 'date') and not isinstance(t.date, str):
+            t.date = t.date.isoformat()
+    return trades
 
 # ModelResults endpoints
 @router.post("/modelresults/", response_model=schemas.ModelResultsOut)

@@ -13,11 +13,6 @@ export default function Login() {
   const [error, setError] = React.useState("");
 
   const onSubmit = async (data) => {
-    // console.log("Login attempt:", data);
-    // TODO: Add real authentication here - send data to backend
-    // For now, just log in the user
-    // login(data.rememberMe); // Pass the remember me state
-    // navigate("/"); // Redirect to home page
     setError("");
     try {
       const response = await fetch("http://localhost:8000/login", {
@@ -29,7 +24,14 @@ export default function Login() {
         })
       });
       if (response.ok) {
-        login(data.rememberMe);
+        // Fetch user info to get user_id
+        const userInfoRes = await fetch(`http://localhost:8000/users/?username=${data.username}`);
+        let userId = null;
+        if (userInfoRes.ok) {
+          const userInfo = await userInfoRes.json();
+          userId = userInfo.user_id;
+        }
+        login(userId, data.rememberMe);
         navigate("/");
       } else {
         const resData = await response.json();

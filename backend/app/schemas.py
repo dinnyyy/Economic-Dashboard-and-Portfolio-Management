@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_serializer
+from datetime import date
 
 
 class UserBase(BaseModel):
@@ -34,14 +35,36 @@ class TradesBase(BaseModel):
     portfolio_id: int
     action: str
 
-class TradesCreate(TradesBase):
-    pass
+class TradesCreate(BaseModel):
+    symbol: str
+    price: float
+    quantity: int
+    action: str
+    date: str
+    portfolio_id: int  # <-- add this line
 
-class TradesOut(TradesBase):
+class TradesOut(BaseModel):
     trades_id: int
+    symbol: str
+    quantity: int
+    price: float
+    date: str  # keep as str
+    portfolio_id: int
+    action: str
+
+    @field_serializer('date')
+    def serialize_date(self, value):
+        return value.isoformat() if hasattr(value, 'isoformat') else value
 
     class Config:
         orm_mode = True
+
+    @staticmethod
+    def from_orm(obj):
+        d = obj.__dict__.copy()
+        if isinstance(d['date'], date):
+            d['date'] = d['date'].isoformat()
+        return TradesOut(**d)
 
 class ModelResultsBase(BaseModel):
     user_id: int

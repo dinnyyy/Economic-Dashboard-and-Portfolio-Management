@@ -32,6 +32,7 @@ class Trades(Base):
     price = Column(Float, unique=False, nullable=False)
     date = Column(Date, unique=False, nullable=False)
     portfolio_id = Column(Integer, ForeignKey("portfolio.portfolio_id"))
+    action = Column(String, nullable=False)
 
 class ModelResults(Base):
     __tablename__ = "results"
