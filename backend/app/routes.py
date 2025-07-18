@@ -98,6 +98,14 @@ def get_all_trades(db: Session = Depends(database.get_db)):
             t.date = t.date.isoformat()
     return trades
 
+@router.get("/portfolios/{portfolio_id}/trades/", response_model=List[schemas.TradesOut])
+def get_trades_for_portfolio(portfolio_id: int, db: Session = Depends(database.get_db)):
+    trades = db.query(models.Trades).filter(models.Trades.portfolio_id == portfolio_id).all()
+    for t in trades:
+        if hasattr(t, 'date') and not isinstance(t.date, str):
+            t.date = t.date.isoformat()
+    return trades
+
 # ModelResults endpoints
 @router.post("/modelresults/", response_model=schemas.ModelResultsOut)
 def create_model_results(result: schemas.ModelResultsCreate, db: Session = Depends(database.get_db)):

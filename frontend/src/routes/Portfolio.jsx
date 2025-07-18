@@ -22,7 +22,8 @@ function Portfolio() {
   }, [userId]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/trades/")
+    if (!portfolioId) return;
+    fetch(`http://localhost:8000/portfolios/${portfolioId}/trades/`)
       .then(res => res.json())
       .then(data => {
         const sorted = Array.isArray(data)
@@ -31,7 +32,7 @@ function Portfolio() {
         setTrades(sorted);
       })
       .catch(err => console.error("Failed to fetch trades", err));
-  }, []);
+  }, [portfolioId]);
 
   const calculatePositions = (trades) => {
     if (!Array.isArray(trades)) return [];
@@ -109,7 +110,8 @@ function Portfolio() {
         <AddTrade
           portfolioId={portfolioId}
           onTradeAdded={() => {
-            fetch("http://localhost:8000/trades/")
+            if (!portfolioId) return;
+            fetch(`http://localhost:8000/portfolios/${portfolioId}/trades/`)
               .then(res => res.json())
               .then(data => {
                 const sorted = Array.isArray(data)
