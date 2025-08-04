@@ -1,0 +1,102 @@
+.edit-trade{
+    background: linear-gradient(135deg, #2c3e50, #2c3e50);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px #364350;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 36px;
+  }
+
+  .edit-trade:hover {
+    background: linear-gradient(135deg, #3a5067, #3b5268);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+  }
+  
+  .edit-trade:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px #364350;
+  }
+  
+  /* Delete Trade Popup Styles */
+  .edit-trade-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    text-align: center;
+  }
+  
+  .edit-trade-wrapper h3 {
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .edit-trade-wrapper .confirmation {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .edit-trade-wrapper .confirm {
+    background: linear-gradient(135deg, #3498db, #3498db);;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px #2d84be;
+    min-width: 100px;
+  }
+  
+  .edit-trade-wrapper .confirm:hover {
+    background: linear-gradient(135deg, #3498db, #3498db);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px #2d84be;
+  }
+  
+  .edit-trade-wrapper .cancel {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+  }
+  
+  .edit-trade-wrapper .cancel:hover {
+    background: #e9ecef;
+    color: #495057;
+    border-color: #dee2e6;
+    transform: translateY(-1px);
+  }
+  
+  /* Error message styling */
+  .edit-trade-wrapper .error-message {
+    color:#dc3545;
+    font-size: 14px;
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    text-align: center;
+  }

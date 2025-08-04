@@ -1,0 +1,168 @@
+.portfolio {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .portfolio button {
+    background-color: #3b823e;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  h3 {
+    text-align: center;
+  }
+  
+  h2 {
+    text-align: left;
+  }
+  
+  .portfolio button:hover {
+    background-color: #54a157;
+  }
+  
+  .positions-table,
+  .trades-table {
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .add-trade-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 12px 12px;
+  }
+  
+  input {
+    border: none;           /* Remove all borders */
+    border-bottom: 2px solid #2c3e50; /* Add only a bottom border */
+    outline: none;          /* Remove the default outline */
+    background: transparent; /* Optional: makes background clear */
+    padding: 0.5em 0;       /* Optional: adds some vertical space */
+    font-size: 1em;         /* Optional: adjust as needed */
+    transition: border-color 0.2s; /* Optional: smooth color change on focus */
+  }
+  
+  input:focus {
+    border-bottom: 2px solid #6b7f91; /* Change color on focus (optional) */
+    outline: none;
+  }
+  
+  /* This targets the default reactjs-popup modal content */
+  .reactjs-popup-content, .popup-content {
+    border-radius: 16px !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12) !important;
+  }
+  
+  h1 {
+    padding-bottom: 30px;
+    padding-top: 10px;
+  }
+  
+  .action-toggle {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .action-toggle button {
+    flex: 1;
+    padding: 7px 0;
+    border: 1px solid #2c3e50;
+    background: #f8f8f8;
+    color: #2c3e50;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border-radius: 0;
+  }
+  
+  .action-toggle button:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: none;
+  }
+  
+  .action-toggle button:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .action-toggle button.active {
+    background: #3b823e;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .action-toggle button.sell.active {
+    background: #c0392b; /* A strong red */
+    color: white;
+    font-weight: bold;
+  }
+  
+  .submit {
+    background:#2c3e50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .submit:enabled {
+    cursor: pointer;
+  }
+  
+  .submit:disabled {
+    cursor: not-allowed;
+    opacity: 0.6; /* Optional: visually indicate disabled state */
+  }
+  
+  /* Trade Action Badge Styles */
+  .trade-action-badge {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .trade-action-buy {
+    color: #3b823e;
+    background-color: #e8f5e8;
+    border: 1px solid #c3e6c3;
+  }
+  
+  .trade-action-sell {
+    color: #c0392b;
+    background-color: #ffeaea;
+    border: 1px solid #f5c6cb;
+  }

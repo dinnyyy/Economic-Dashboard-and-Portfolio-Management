@@ -88,6 +88,8 @@ def delete_trades(trades_id: int, db: Session = Depends(database.get_db)):
     db_trade = crud.delete_trades(db, trades_id)
     if db_trade is None:
         raise HTTPException(status_code=404, detail="Trade not found")
+    if hasattr(db_trade, 'date') and not isinstance(db_trade.date, str):
+        db_trade.date = db_trade.date.isoformat()
     return db_trade
 
 @router.get("/trades/", response_model=List[schemas.TradesOut])
