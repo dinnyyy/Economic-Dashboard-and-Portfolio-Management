@@ -270,8 +270,9 @@ function Portfolio() {
                   tradeSymbol={trade.symbol}
                   tradeQuantity={trade.quantity}
                   tradeAction={trade.action}
-                  onTradeDeleted={() => {
+                  onTradeUpdated={() => {
                     if (!portfolioId) return;
+
                     fetch(`http://localhost:8000/portfolios/${portfolioId}/trades/`)
                       .then(res => res.json())
                       .then(data => {
@@ -282,6 +283,7 @@ function Portfolio() {
                       })
                       .catch(err => console.error("Failed to fetch trades", err));
                   }}
+
                 /></td>
               </tr>
             ))}

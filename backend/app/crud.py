@@ -197,3 +197,18 @@ def create_tracker(db: Session, portfolio_id: int):
     db.refresh(db_tracker)
     return db_tracker
 
+def update_trade(db: Session, trade_id: int, trade_update: schemas.TradesUpdate):
+    db_trade = db.query(models.Trades).filter(models.Trades.trades_id == trade_id).first()
+    if not db_trade:
+        return None  # caller should handle 404
+
+    db_trade.symbol = trade_update.symbol
+    db_trade.price = trade_update.price
+    db_trade.quantity = trade_update.quantity
+    db_trade.action = trade_update.action
+    db_trade.date = trade_update.date
+    db_trade.portfolio_id = trade_update.portfolio_id
+
+    db.commit()
+    db.refresh(db_trade)
+    return db_trade

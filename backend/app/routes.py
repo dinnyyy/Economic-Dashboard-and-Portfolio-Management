@@ -185,3 +185,10 @@ def login(user: schemas.UserLogin, db: Session = Depends(database.get_db)):
     if not db_user or db_user.password != user.password:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username or password")
     return {"message": "Login successful"}
+
+@router.put("/trades/{trade_id}", response_model=schemas.TradesOut)
+def update_trade(trade_id: int, trade_update: schemas.TradesUpdate, db: Session = Depends(database.get_db)):
+    db_trade = crud.update_trade(db=db, trade_id=trade_id, trade_update=trade_update)
+    if not db_trade:
+        raise HTTPException(status_code=404, detail="Trade not found")
+    return db_trade

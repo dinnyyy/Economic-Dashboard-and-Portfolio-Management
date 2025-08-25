@@ -1,5 +1,5 @@
 from ast import List
-from pydantic import BaseModel, field_serializer
+from pydantic import BaseModel, ConfigDict, field_serializer
 from datetime import date
 
 
@@ -49,7 +49,7 @@ class TradesOut(BaseModel):
     symbol: str
     quantity: int
     price: float
-    date: str  # keep as str
+    date: date  # keep as str
     portfolio_id: int
     action: str
 
@@ -100,8 +100,17 @@ class UserLogin(BaseModel):
 
 class Tracker(BaseModel):
     portfolio_id: int
-    portfolio_values: List[float]
-    dates: List[date]
+    portfolio_values: list[float]   # or list[float] if Python >=3.9
+    dates: list[date]               # or list[date]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
+
+class TradesUpdate(BaseModel):
+    symbol: str
+    price: float
+    quantity: int
+    action: str
+    date: date
+    portfolio_id: int
+
+    

@@ -23,6 +23,9 @@ class Portfolio(Base):
     portfolio_id = Column(Integer, primary_key=True, index=True)
     owner_id = Column(Integer, ForeignKey("users.user_id"))
 
+    tracker = relationship("Tracker", back_populates="portfolio", uselist=False)  # if one tracker per portfolio
+
+
 class Trades(Base):
     __tablename__ = "trades"
 
@@ -57,7 +60,7 @@ class Tracker(Base):
     __tablename__ = "tracker"
 
     tracker_id = Column(Integer, primary_key=True, index=True)
-    portfolio_id = Column(Integer, ForeignKey("portfolios.portfolio_id"), nullable=False)
+    portfolio_id = Column(Integer, ForeignKey("portfolio.portfolio_id"), nullable=False)
 
     # Store 365-day rolling portfolio values and corresponding dates
     portfolio_values = Column(JSON, nullable=False)  # list of floats
