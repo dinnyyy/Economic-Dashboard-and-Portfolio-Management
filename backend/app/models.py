@@ -52,3 +52,16 @@ class Reports(Base):
     created_at = Column(Date, unique=False, nullable=False)
 
     models = relationship("ModelResults", secondary=report_models, back_populates="reports")
+
+class Tracker(Base):
+    __tablename__ = "tracker"
+
+    tracker_id = Column(Integer, primary_key=True, index=True)
+    portfolio_id = Column(Integer, ForeignKey("portfolios.portfolio_id"), nullable=False)
+
+    # Store 365-day rolling portfolio values and corresponding dates
+    portfolio_values = Column(JSON, nullable=False)  # list of floats
+    dates = Column(JSON, nullable=False)             # list of ISO date strings
+
+    # Relationship back to the portfolio (optional)
+    portfolio = relationship("Portfolio", back_populates="tracker")

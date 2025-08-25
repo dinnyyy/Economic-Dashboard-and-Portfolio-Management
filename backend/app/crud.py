@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from sqlalchemy.orm import Session
 from . import models
 from . import schemas
@@ -180,3 +181,19 @@ def update_report(db: Session, report_id: int, report_update: schemas.ReportsCre
 
 def get_all_trades(db: Session):
     return db.query(models.Trades).all()
+
+def create_tracker(db: Session, portfolio_id: int):
+    initial_values = [0.0] * 365
+    start_date = date.today() - timedelta(days=364)
+    dates = [start_date + timedelta(days=i) for i in range(365)]
+
+    db_tracker = models.Tracker(
+        portfolio_id=portfolio_id,
+        portfolio_values=initial_values,
+        dates=dates
+    )
+    db.add(db_tracker)
+    db.commit()
+    db.refresh(db_tracker)
+    return db_tracker
+

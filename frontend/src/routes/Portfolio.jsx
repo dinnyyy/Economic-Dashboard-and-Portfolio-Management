@@ -12,11 +12,9 @@ function Portfolio() {
   const { userId } = useAuth(); // You may need to add this to your AuthContext
 
   useEffect(() => {
-    console.log("userId:", userId);
     fetch(`http://localhost:8000/users/${userId}/portfolios/`)
       .then(res => res.json())
       .then(data => {
-        console.log("Portfolios:", data);
         if (Array.isArray(data) && data.length > 0) {
           setPortfolioId(data[0].portfolio_id); // Use the first portfolio for now
         }

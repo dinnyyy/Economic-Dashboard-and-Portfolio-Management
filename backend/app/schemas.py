@@ -1,3 +1,4 @@
+from ast import List
 from pydantic import BaseModel, field_serializer
 from datetime import date
 
@@ -97,3 +98,10 @@ class UserLogin(BaseModel):
     username: str
     password: str
 
+class Tracker(BaseModel):
+    portfolio_id: int
+    portfolio_values: List[float]
+    dates: List[date]
+
+    class Config:
+        orm_mode = True

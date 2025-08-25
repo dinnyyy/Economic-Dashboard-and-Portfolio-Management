@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from typing import List
@@ -14,6 +15,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)
     db_user = crud.get_user_by_email(db, user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
+    
     return crud.create_user(db=db, user=user)
 
 @router.get("/users/{user_id}", response_model=schemas.UserOut)
@@ -37,7 +39,24 @@ def get_user_portfolios(user_id: int, db: Session = Depends(database.get_db)):
 # Portfolio endpoints
 @router.post("/portfolios/", response_model=schemas.PortfolioOut)
 def create_portfolio(portfolio: schemas.PortfolioCreate, db: Session = Depends(database.get_db)):
-    return crud.create_portfolio(db=db, portfolio=portfolio)
+
+    new_portfolio = crud.create_portfolio(db=db, portfolio=portfolio)
+
+    initial_values = [0.0] * 365
+    start_date = date.today() - timedelta(days=364)
+    dates = [start_date + timedelta(days=i) for i in range(365)]
+
+    # Create Tracker linked to this portfolio
+    crud.create_tracker(
+        db=db,
+        tracker=schemas.Tracker(
+            portfolio_id=new_portfolio.portfolio_id,   # ✅ use the new portfolio_id
+            portfolio_values=initial_values,
+            dates=dates
+        )
+    )
+
+    return new_portfolio
 
 @router.get("/portfolios/{portfolio_id}", response_model=schemas.PortfolioOut)
 def read_portfolio(portfolio_id: int, db: Session = Depends(database.get_db)):

@@ -3,6 +3,8 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import "../Portoflio/editTrade.css"
+import { CiEdit } from "react-icons/ci";
+
 
 
 export default function EditTrade({tradeId, onTradeDeleted, portfolioId, tradePrice, tradeSymbol, tradeQuantity, tradeAction}) {
@@ -70,7 +72,7 @@ export default function EditTrade({tradeId, onTradeDeleted, portfolioId, tradePr
 
     return (
         <Popup
-            trigger={<button className='edit-trade'><RiDeleteBin5Fill/></button>}
+            trigger={<button className='edit-trade'><CiEdit/></button>}
             modal
             nested
             contentStyle={{
