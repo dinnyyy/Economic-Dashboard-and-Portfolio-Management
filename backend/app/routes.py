@@ -42,19 +42,8 @@ def create_portfolio(portfolio: schemas.PortfolioCreate, db: Session = Depends(d
 
     new_portfolio = crud.create_portfolio(db=db, portfolio=portfolio)
 
-    initial_values = [0.0] * 365
-    start_date = date.today() - timedelta(days=364)
-    dates = [start_date + timedelta(days=i) for i in range(365)]
-
-    # Create Tracker linked to this portfolio
-    crud.create_tracker(
-        db=db,
-        tracker=schemas.Tracker(
-            portfolio_id=new_portfolio.portfolio_id,   # ✅ use the new portfolio_id
-            portfolio_values=initial_values,
-            dates=dates
-        )
-    )
+    # Create tracker linked to this portfolio
+    crud.create_tracker(db=db, portfolio_id=new_portfolio.portfolio_id)
 
     return new_portfolio
 

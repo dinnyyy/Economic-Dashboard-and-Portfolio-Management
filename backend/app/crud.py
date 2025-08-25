@@ -185,7 +185,7 @@ def get_all_trades(db: Session):
 def create_tracker(db: Session, portfolio_id: int):
     initial_values = [0.0] * 365
     start_date = date.today() - timedelta(days=364)
-    dates = [start_date + timedelta(days=i) for i in range(365)]
+    dates = [(start_date + timedelta(days=i)).isoformat() for i in range(365)]  # store ISO strings
 
     db_tracker = models.Tracker(
         portfolio_id=portfolio_id,
