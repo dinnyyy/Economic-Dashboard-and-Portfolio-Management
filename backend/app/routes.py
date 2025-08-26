@@ -68,6 +68,39 @@ def delete_portfolio(portfolio_id: int, db: Session = Depends(database.get_db)):
         raise HTTPException(status_code=404, detail="Portfolio not found")
     return db_portfolio
 
+# Tracker endpoints
+@router.post("/trackers/", response_model=schemas.TrackerOut)
+def create_tracker(tracker: schemas.TrackerCreate, db: Session = Depends(database.get_db)):
+    return crud.create_tracker(db=db, portfolio_id=tracker.portfolio_id)
+
+@router.get("/trackers/{tracker_id}", response_model=schemas.TrackerOut)
+def read_tracker(tracker_id: int, db: Session = Depends(database.get_db)):
+    db_tracker = crud.get_tracker(db, tracker_id)
+    if db_tracker is None:
+        raise HTTPException(status_code=404, detail="Tracker not found")
+    return db_tracker
+
+@router.get("/portfolios/{portfolio_id}/tracker/", response_model=schemas.TrackerOut)
+def get_tracker_by_portfolio(portfolio_id: int, db: Session = Depends(database.get_db)):
+    db_tracker = crud.get_tracker_by_portfolio(db, portfolio_id)
+    if db_tracker is None:
+        raise HTTPException(status_code=404, detail="Tracker not found for this portfolio")
+    return db_tracker
+
+@router.put("/trackers/{tracker_id}", response_model=schemas.TrackerOut)
+def update_tracker(tracker_id: int, tracker_update: schemas.TrackerCreate, db: Session = Depends(database.get_db)):
+    db_tracker = crud.update_tracker(db, tracker_id, tracker_update.portfolio_values, tracker_update.dates)
+    if db_tracker is None:
+        raise HTTPException(status_code=404, detail="Tracker not found")
+    return db_tracker
+
+@router.delete("/trackers/{tracker_id}", response_model=schemas.TrackerOut)
+def delete_tracker(tracker_id: int, db: Session = Depends(database.get_db)):
+    db_tracker = crud.delete_tracker(db, tracker_id)
+    if db_tracker is None:
+        raise HTTPException(status_code=404, detail="Tracker not found")
+    return db_tracker
+
 # Trades endpoints
 @router.post("/trades/", response_model=schemas.TradesOut)
 def create_trades(trade: schemas.TradesCreate, db: Session = Depends(database.get_db)):

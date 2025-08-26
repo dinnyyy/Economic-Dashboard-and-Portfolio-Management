@@ -101,7 +101,20 @@ class UserLogin(BaseModel):
 class Tracker(BaseModel):
     portfolio_id: int
     portfolio_values: list[float]   # or list[float] if Python >=3.9
-    dates: list[date]               # or list[date]
+    dates: list[str]                # list of ISO date strings to match the model
+
+    model_config = ConfigDict(from_attributes=True)
+
+class TrackerCreate(BaseModel):
+    portfolio_id: int
+    portfolio_values: list[float]
+    dates: list[str]
+
+class TrackerOut(BaseModel):
+    tracker_id: int
+    portfolio_id: int
+    portfolio_values: list[float]
+    dates: list[str]
 
     model_config = ConfigDict(from_attributes=True)
 

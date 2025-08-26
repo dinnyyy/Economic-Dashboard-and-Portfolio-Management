@@ -22,6 +22,9 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_portfolio)
 
+    # Create a tracker for the new portfolio
+    create_tracker(db=db, portfolio_id=db_portfolio.portfolio_id)
+
     return db_user
 
 
@@ -71,6 +74,10 @@ def create_trades(db: Session, trade: schemas.TradesCreate):
     db.add(db_trade)
     db.commit()
     db.refresh(db_trade)
+    
+    # Update tracker with new trade data
+    update_tracker_from_trades(db, trade.portfolio_id)
+    
     return db_trade
 
 def get_trades(db: Session, trades_id: int):
@@ -79,8 +86,13 @@ def get_trades(db: Session, trades_id: int):
 def delete_trades(db: Session, trades_id: int):
     trade = get_trades(db, trades_id)
     if trade:
+        portfolio_id = trade.portfolio_id  # Store portfolio_id before deleting
         db.delete(trade)
         db.commit()
+        
+        # Update tracker after deleting trade
+        update_tracker_from_trades(db, portfolio_id)
+        
     return trade
 
 
@@ -156,6 +168,10 @@ def update_trades(db: Session, trades_id: int, trade_update: schemas.TradesCreat
         trade.portfolio_id = trade_update.portfolio_id
         db.commit()
         db.refresh(trade)
+        
+        # Update tracker after updating trade
+        update_tracker_from_trades(db, trade.portfolio_id)
+        
     return trade
 
 
@@ -197,6 +213,28 @@ def create_tracker(db: Session, portfolio_id: int):
     db.refresh(db_tracker)
     return db_tracker
 
+def get_tracker(db: Session, tracker_id: int):
+    return db.query(models.Tracker).filter(models.Tracker.tracker_id == tracker_id).first()
+
+def get_tracker_by_portfolio(db: Session, portfolio_id: int):
+    return db.query(models.Tracker).filter(models.Tracker.portfolio_id == portfolio_id).first()
+
+def update_tracker(db: Session, tracker_id: int, portfolio_values: list[float], dates: list[str]):
+    tracker = get_tracker(db, tracker_id)
+    if tracker:
+        tracker.portfolio_values = portfolio_values
+        tracker.dates = dates
+        db.commit()
+        db.refresh(tracker)
+    return tracker
+
+def delete_tracker(db: Session, tracker_id: int):
+    tracker = get_tracker(db, tracker_id)
+    if tracker:
+        db.delete(tracker)
+        db.commit()
+    return tracker
+
 def update_trade(db: Session, trade_id: int, trade_update: schemas.TradesUpdate):
     db_trade = db.query(models.Trades).filter(models.Trades.trades_id == trade_id).first()
     if not db_trade:
@@ -212,3 +250,28 @@ def update_trade(db: Session, trade_id: int, trade_update: schemas.TradesUpdate)
     db.commit()
     db.refresh(db_trade)
     return db_trade
+
+def update_tracker_from_trades(db: Session, portfolio_id: int):
+    """Update tracker values based on current portfolio trades"""
+    tracker = get_tracker_by_portfolio(db, portfolio_id)
+    if not tracker:
+        return None
+    
+    # Get all trades for this portfolio
+    trades = db.query(models.Trades).filter(models.Trades.portfolio_id == portfolio_id).all()
+    
+    # Calculate current portfolio value (simplified calculation)
+    current_value = 0.0
+    for trade in trades:
+        if trade.action == "BUY":
+            current_value += trade.quantity * trade.price
+        else:  # SELL
+            current_value -= trade.quantity * trade.price
+    
+    # Update the most recent date in tracker with current value
+    if tracker.portfolio_values and tracker.dates:
+        tracker.portfolio_values[-1] = max(0, current_value)  # Ensure non-negative
+        db.commit()
+        db.refresh(tracker)
+    
+    return tracker
